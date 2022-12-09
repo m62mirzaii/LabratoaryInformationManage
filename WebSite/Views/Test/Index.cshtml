@@ -1,0 +1,75 @@
+﻿@model IEnumerable<Models.ViewModel.TestViewModel>
+
+@{
+    ViewData["Title"] = "نمایش آزمایش ها";
+    Layout = "~/Views/Shared/_masterLayout.cshtml";
+}
+
+@section Script
+{
+    <script src="~/website/Test.js" asp-append-version="true"></script>
+}
+
+<div class="card m-0">
+    <div class="card bg-gradient" style="margin: 0;background: #d9d9d9">
+        <div class="content table-responsive table-full-width">
+            <label style="padding-right : 10px  ; font-size:20px;"> قطعات    </label>
+        </div>
+    </div>
+    <div class="card">
+        <div class="content table-responsive table-full-width m-1">
+            <div style="width:80%">
+                <div class="row" style="direction: ltr;padding:12px">
+                    <a id="btnAdd" class="btn btn-success" style="width:120px">جدید</a>
+                </div>
+                <table id="tblTest" class="table table-striped table-bordered text-right table-responsive">
+                    <thead class="text-center">
+                        <tr>
+                            <th>نام تست </th>
+                            <th>نام کاربرد</th>
+                            <th>هزینه</th>
+                            <th>از تاریخ</th>
+                            <th> تا تاریخ</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (Model != null)
+                        {
+                            foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td>@Html.DisplayFor(model => item.TestName)</td>
+                                    <td>@Html.DisplayFor(model => item.ProcessName)</td>
+                                    <td>@Html.DisplayFor(model => item.Amount)</td>
+                                    <td>@Html.DisplayFor(model => item.FromDate)</td>
+                                    <td>@Html.DisplayFor(model => item.EndDate)</td>
+                                    <td width="15%">
+                                        <a id="btnEdit" class="btn btn-sm btn-primary" data-id="@item.Id"> <i class="fa fa-edit"></i>  ویرایش</a>
+                                        <a href="#" class="btn btn-sm btn-danger" onclick="myDelete('@item.Id')"><i class="fa fa-trash"></i></a>
+                                    </td>
+                                </tr>
+                            }
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+<!-- Modal Popup -->
+<div id="MyPopup" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div style="background-color:#3a768f">
+                <img src="~/img/plus_21081.png" style="padding : 8px">
+            </div>
+            <div class="modal-body">
+                <div id="dvPartial"></div>
+            </div>
+        </div>
+    </div>
+</div>

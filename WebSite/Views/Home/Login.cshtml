@@ -1,0 +1,69 @@
+﻿@model Models.ViewModel.UserViewModel
+@{
+    ViewData["Title"] = "User";
+} 
+
+@section Script{
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/simple-line-icons/2.4.1/css/simple-line-icons.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="~/css/bootstrap.css">
+    <link rel="stylesheet" href="~/css/login-style.css">
+    <script type="text/javascript" src="~/js/jquery-3.5.1.js"></script>
+    <script type="text/javascript" src="~/login/Login.js"></script> 
+}
+
+@section mySection{
+    @if (ViewBag.IsValid == false)
+    {
+        <script src="~/js/sweet.js"></script>
+        <script>
+            swal("اخطار", "نام کاربری یا رمز عبور اشتباه وارد شده است", "warning", {
+                button: "متوجه شدم",
+                dangerMode: true,
+            });
+        </script>
+    }
+} 
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">   
+</head> 
+<body>
+    <div class="registration-form">
+        <form asp-action="LoginValidation">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-icon">
+                <span><i class="icon icon-user"></i></span>
+            </div>
+            <div class="form-group">
+                <input type="text" asp-for="UserName" class=" form-control item" id="username" placeholder="نام کاربری" required>
+                <span asp-validation-for="UserName" class="text-danger"></span>
+            </div> 
+            <div class="form-group">
+                <input type="password" asp-for="Password" class="form-control item" id="password" placeholder="رمز عبور" required>
+            </div> 
+            <div class="form-group">
+                <input type="submit" id="btnLogin" value="ورود" class="btn btn-block create-account">
+            </div>
+        </form>
+        <div class="social-media">
+            <div class="social-icons">
+            </div>
+        </div>
+    </div> 
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+

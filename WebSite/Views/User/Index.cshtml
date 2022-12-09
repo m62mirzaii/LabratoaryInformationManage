@@ -1,0 +1,80 @@
+﻿@model IEnumerable<Models.ViewModel.UserViewModel>
+
+@{
+    ViewData["Title"] = "تعریف کاربران";
+    Layout = "~/Views/Shared/_masterLayout.cshtml";
+}
+
+@section Script
+    {
+    <script src='~/website/User.js'></script>
+}
+<div class="card m-0">
+    <div class="card bg-gradient" style="margin: 0;background: #d9d9d9">
+        <div class="content table-responsive table-full-width">
+            <label style="padding-right : 10px  ; font-size:20px;"> کاربران </label>
+        </div>
+    </div>
+    <div class="card">
+        <div class="content table-responsive table-full-width m-1">
+            <div style="width:80%">
+                <div class="row" style="direction: ltr;padding:12px"> 
+                    <a id="btnAdd" class="btn btn-success" style="width:120px">جدید</a> 
+                </div>
+                <table id="tblUser" class="table table-striped table-bordered table-responsive">
+                    <thead class="text-center">
+                        <tr>
+                            <th>نام </th>
+                            <th>Admin</th>
+                            <th>تلفن </th>
+                            <th>آدرس</th>
+                            <th>نام کاربری</th>
+                            <th>رمز عبور</th>
+                            <th>وضعیت</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (Model != null)
+                        {
+                            foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td>@Html.DisplayFor(model => item.FullName)</td>
+                                    <td>@Html.DisplayFor(model => item.IsAdmin)</td>
+                                    <td>@Html.DisplayFor(model => item.Phone)</td>
+                                    <td>@Html.DisplayFor(model => item.Address)</td>
+                                    <td>@Html.DisplayFor(model => item.UserName)</td>
+                                    <td>@Html.DisplayFor(model => item.Password)</td> 
+                                    <td>@Html.DisplayFor(model => item.IsActive)</td>
+                                    <td width="150px">
+                                        <a id="btnEdit" class="btn btn-sm btn-primary" data-id="@item.Id"> <i class="fa fa-edit"></i>  ویرایش</a>
+                                        <a href="#" class="btn btn-sm btn-danger" onclick="myDelete('@item.Id')"><i class="fa fa-trash"></i></a>
+                                    </td>
+                                </tr>
+                            }
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+<!-- Modal Popup -->
+<div id="MyPopup" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div style="background-color:#3a768f">                
+                <img src="~/img/plus_21081.png" style="padding : 8px">
+            </div>
+            <div class="modal-body">
+                <div id="dvPartial"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+

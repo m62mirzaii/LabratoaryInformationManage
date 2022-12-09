@@ -1,0 +1,21 @@
+﻿@addTagHelper*, Microsoft.AspNetCore.Mvc.TagHelpers
+@model Models.Model.LabratoaryTool
+
+<div class="container">
+    <h4>ثبت </h4>
+    <hr />
+    <div class="row">
+        <div class="col-md-4">
+            <form asp-action="AddLabratoaryTool" asp-controller="LabratoaryTool">
+                <div class="form-group">
+                    <label asp-for="ToolName" class="control-label"></label>
+                    <input asp-for="ToolName" class="form-control" />
+                </div>
+
+                <div class="form-group">
+                    <input type="submit" value="ذخیره" asp-action="AddLabratoaryTool" class="btn btn-success btn-sm" />
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

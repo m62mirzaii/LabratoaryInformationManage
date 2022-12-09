@@ -1,0 +1,71 @@
+﻿@model IEnumerable<Models.Model.Definition>
+
+@{
+    ViewData["Title"] = "نمایش کاربرد ها";
+    Layout = "~/Views/Shared/_dashboardLayout.cshtml";
+}
+
+@section Script
+{
+    <script src="~/js/sweet.js"></script> 
+}
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="header">
+                <h4 class="title pull-right">کاربرد ها</h4>
+                <h4 class="title pull-left">
+                    <a href="/PieceUsage/Create" class="btn btn-success">جدید</a>
+                </h4>
+                <div class="clearfix"></div>
+                <br />
+                <input type="text" class="form-control" placeholder="جستجو   ..." id="mySearch" />
+            </div>
+            <div class="content table-responsive table-full-width">
+                <table class="table table-hover table-striped">
+                    <thead>
+                        <tr>
+                            <th>نام کاربرد</th>
+
+                        </tr>
+                    </thead>
+                    <tbody id="myTable">
+                        @if (Model != null)
+                        {
+                            foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td>@Html.DisplayFor(model => item.ProcessId)</td>
+                                    <td>
+                                        <a id="btnEdit" class="btn btn-primary btn-sm" data-id="@item.Id">ویرایش</a>
+                                        <a href="#" onclick="myDelete('@item.Id')" class="btn btn-xs btn-danger"><i class="fa fa-trash"></i></a>
+                                    </td>
+                                </tr>
+                            }
+                        }
+                    </tbody>
+                </table>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+<!-- Modal Popup -->
+<div id="MyPopup" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div style="background-color:#3a768f">
+                <img src="~/img/plus_21081.png" style="padding : 8px">
+            </div>
+            <div class="modal-body">
+                <div id="dvPartial"></div>
+            </div>
+        </div>
+    </div>
+</div>

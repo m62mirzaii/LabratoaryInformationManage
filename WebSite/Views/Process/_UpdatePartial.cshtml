@@ -1,0 +1,86 @@
+﻿@addTagHelper*, Microsoft.AspNetCore.Mvc.TagHelpers
+@model Models.Model.Process
+
+<script>
+    $("#definitionList").select2({
+        dropdownParent: $(".modal-body"),
+        allowClear: true,
+        minimumInputLength: 0,
+        ajax: {
+            cache: false,
+            dataType: "json",
+            type: "Post",
+            url: "Definition/GetAllDefinitions",
+            data: '{}',
+            processResults: function (data) {
+                return {
+                    results: $.map(data, function (item) {
+                        return {
+                            text: item.name,
+                            id: item.id
+                        }
+                    })
+                };
+            }
+        },
+    }).on('change', function (e) {
+        var getID = $(this).select2('data');
+        $("#DefinitionId").val(getID[0]['id']);
+    });
+
+    $('#chk_IsActive').on('change', function () {
+        if (this.checked) {
+            $("#chk_IsActive1").val(true);
+        }
+        else {
+            $("#chk_IsActive1").val(false);
+        }
+    });
+
+</script>
+
+<div class="row alertBox hidden" id="alertBox">
+    <span role="alert" class="alert"></span>
+</div> 
+
+<div class="container">
+    <form asp-action="UpdateProcess" asp-controller="Process">
+        <div class="form-group">
+            <input asp-for="Id" type="hidden" readonly="readonly" />
+        </div>
+        <div class="row" style="padding-bottom:20px">
+            <div class="col-8">
+                <div class="form-group">
+                    <label asp-for="ProcessName" class="control-label"> نام فرآیند</label>
+                    <input asp-for="ProcessName" id="txt_ProcessName" class="form-control" />
+                </div>
+            </div>
+        </div>
+        <div class="row" style="padding-bottom:20px">
+            <div class="col-8">
+                <div class="form-group">
+                    <label asp-for="DefinitionId" class="control-label">نام Definition</label>
+                    <select class="form-control" id="definitionList" name="definitionList" asp-for="DefinitionId"
+                            asp-items="@(new SelectList(string.Empty, "Id", "Name"))" style="width:300px"></select>
+                    <input asp-for="DefinitionId" id="DefinitionId" class="form-control" type="hidden" readonly="readonly" />
+                </div>
+            </div>
+        </div>
+        <div class="row" style="padding-bottom:20px">
+            <div class="col-8">
+                <div class="form-group">
+                    <label class="control-label">وضعیت</label>
+                    <input type="checkbox" checked="checked" id="chk_IsActive">
+                    <input asp-for="IsActive" id="chk_IsActive1" class="form-control" value="true" type="hidden" readonly="readonly" />
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-8"></div>
+            <div class="col-4">
+                <input type="submit" value="ویرایش" asp-action="UpdateProcess" id="submit" class="btn btn-warning btn-sm" />
+                <input type="submit" value="خروج" asp-action="Close" class="btn btn-danger btn-sm" />
+            </div>
+        </div>
+    </form>
+</div>

@@ -1,0 +1,26 @@
+﻿@addTagHelper*, Microsoft.AspNetCore.Mvc.TagHelpers
+@model Models.Model.LabratoaryTool
+
+<div class="row alertBox hidden" id="alertBox">
+    <span role="alert" class="alert"></span>
+</div>
+
+<div class="container"> 
+    <form asp-action="AddLabratoaryTool" asp-controller="LabratoaryTool">
+        <div class="row" style="padding-bottom:20px">
+            <div class="col-8">
+                <div class="form-group">
+                    <label asp-for="ToolName" class="control-label">نام ابزار</label>
+                    <input asp-for="ToolName" id="txt_ToolName" class="form-control" />
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-8"></div>
+            <div class="col-4">
+                <input type="submit" value="ذخیره" asp-action="AddLabratoaryTool" id="submit" class="btn btn-success btn-sm" />
+                <input type="submit" value="خروج" asp-action="Close" class="btn btn-danger btn-sm" />
+            </div>
+        </div>
+    </form>
+</div>

@@ -1,10 +1,13 @@
-﻿using Core.Repository;
-using Core.Services;
+﻿using Core.Services.Processes;
 using Microsoft.AspNetCore.Mvc;
-using Models.Model;
+using Models.ViewModel;
+using WebSite.Filters;
 
 namespace WebSite.Controllers
 {
+
+   // [Authorize(systemName = "Process")]
+
     public class ProcessController : Controller
     {
         public IProcessRepository _processService;
@@ -16,62 +19,62 @@ namespace WebSite.Controllers
 
         public  IActionResult Index()
         {
-            var result = _processService.GetProcessViewModel();
-            return View(result);
-        }
-
-        public IActionResult GetProcessViewModel()
-        {
-            var result = _processService.GetProcessViewModel();
-            return RedirectToAction(nameof(Index));
-        }
-
-
-        [HttpPost]
-        public JsonResult GetAllProcess()
-        {
-            var result = _processService.GetAllProcess();
-            return Json(result);
+            return View();
         } 
 
         [HttpPost]
-        public IActionResult Show_InsertPartial()
+        public IActionResult GetProcesses()
         {
-            Process process = new Process();
-            return PartialView("_InsertPartial", process);
-        }
+            var result = _processService.GetProcess(); 
+            var recordsTotal = result.Count();
+            var jsonData = new { recordsTotal = recordsTotal, data = result };
 
-        public IActionResult AddProcess(Process process)
-        {
-            _processService.AddProcess(process);
-            return RedirectToAction(nameof(Index));
+            return Ok(jsonData);
+        }  
+
+        [HttpPost] 
+
+        public void InsertProcess()
+        { 
+            var processTypeId = Convert.ToInt32(Request.Form["ProcessTypeId"].ToString());
+            var processName = Request.Form["ProcessName"].ToString();
+            var isActive = Convert.ToBoolean(Request.Form["IsActive"].ToString()); 
+
+            var process = new ProcessViewModel
+            { 
+                ProcessName = processName,
+                ProcessTypeId = processTypeId,
+                IsActive = isActive,
+            };
+            _processService.AddProcess(process); 
         }
 
         [HttpPost]
-        public async Task<IActionResult> Show_UpdatePartial([FromBody] Process lab)
+        public void UpdateProcess()
         {
-            int id = lab.Id;
-            Process process = await _processService.GetProcessById(id);
-            return PartialView("_UpdatePartial", process);
-        }
+            //int id = process.Id;
+            
 
-        public IActionResult UpdateProcess(Process process)
-        {
-            int id = process.Id;
-            bool result = _processService.UpdateProcess(id, process);
+            var id = Convert.ToInt32(Request.Form["Id"].ToString());
+            var processTypeId = Convert.ToInt32(Request.Form["ProcessTypeId"].ToString());
+            var processName = Request.Form["ProcessName"].ToString();
+            var isActive = Convert.ToBoolean(Request.Form["IsActive"].ToString());
 
-            return RedirectToAction(nameof(Index));
+            var process = new ProcessViewModel
+            {
+                Id= id,
+                ProcessName = processName,
+                ProcessTypeId = processTypeId,
+                IsActive = isActive,
+            };
+
+             _processService.UpdateProcess(process); 
         }
 
         public IActionResult Delete(int id)
         {
             _processService.DeleteProcess(id);
             return RedirectToAction(nameof(Index));
-        }
-
-        public IActionResult Close()
-        {
-            return RedirectToAction(nameof(Index));
-        }
+        } 
     }
 }

@@ -1,30 +1,23 @@
 using Microsoft.EntityFrameworkCore;
 using DataAccessLayer.Context;
-using Core.Services;
-using Core.Repository;
 using System.IdentityModel.Tokens.Jwt;
-using Microsoft.AspNetCore.Server.IISIntegration;
 using Microsoft.AspNetCore.Mvc.Infrastructure;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using DataAccessLayer.Config;
 
-var builder = WebApplication.CreateBuilder(args);
-
+var builder = WebApplication.CreateBuilder(args); 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 builder.Services.AddDbContext<DataBaseContext>(options =>
 {
     options.UseSqlServer(builder.Configuration.GetConnectionString("LabratoaryConnction"));
-});
+}); 
  
-builder.Services.AddScoped<IPieceUsageRepository, PieceUsageService>();
-builder.Services.AddScoped<IPieceRepository, PieceService>();
-builder.Services.AddScoped<ITestRepository, TestService>();
-builder.Services.AddScoped<ILabratoaryToolRepository, LabratoaryToolService>();
-builder.Services.AddScoped<IProcessRepository, ProcessService>();
-builder.Services.AddScoped<ITestRepository, TestService>();
-builder.Services.AddScoped<IDefinitionRepository, DefinitionService>();
-builder.Services.AddScoped<IUserRepository, UserService>();
 
+builder.Services.AddControllersWithViews();
+builder.Services.AddControllers();
+builder.Services.AddMyDependencyGroup();
+builder.Services.AddMemoryCache();
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddTransient<IActionContextAccessor, ActionContextAccessor>();
 
@@ -38,6 +31,18 @@ builder.Services.AddAuthentication(options =>
     options.ExpireTimeSpan = TimeSpan.FromDays(30);
 });
 
+
+builder.Services.AddMvc(m => m.EnableEndpointRouting = false);
+builder.Services.AddMemoryCache();
+builder.Services.AddCors(o => o.AddPolicy("AllowAllOrigins", builder =>
+{
+    builder.AllowAnyOrigin()
+            .AllowAnyMethod()
+            .AllowAnyHeader();
+}));
+
+
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -49,14 +54,14 @@ if (!app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
-
+app.UseMvc();
 app.UseRouting();
 
 JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear();
 app.UseAuthorization();
-
+ 
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
-   
+app.UseCors();
 app.Run();

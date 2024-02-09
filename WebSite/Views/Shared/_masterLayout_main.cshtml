@@ -1,0 +1,210 @@
+﻿
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport' />
+    <meta name="viewport" content="width=device-width" />
+
+    @*=========== CSS  ==============*@
+    <link href="~/css/menu_style.css" rel="stylesheet" />
+    <link href="~/css/my-style.css" rel="stylesheet" />
+    <link href="~/lib/bootstrap/dist/css/bootstrap.css" rel="stylesheet" />
+    @*     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" rel="stylesheet" />*@
+
+    <link href="~/fontawesome/css/all.min.css" rel="stylesheet" />
+    @*=========== JS ==============*@
+    <script src="~/js/jquery.js"></script>
+    <script src="~/js/bootstrap.js"></script>
+    <script src="~/js/sweet.js"></script>
+
+    @*======================== Test =============================*@
+    <link href="~/datatable/jquery-ui.css" rel="stylesheet" type="text/css">
+    <link href="~/datatable/dataTables.jqueryui.min.css" rel="stylesheet" type="text/css">
+
+    <script type="text/javascript" src="https://code.jquery.com/jquery-3.5.1.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/1.13.1/js/jquery.dataTables.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/1.13.1/js/dataTables.jqueryui.js"></script>
+
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
+
+</head>
+<body>
+    <div class="sidebar showMenu">
+        <div class="logo-details" style="margin-bottom:80px; margin-top:50px; padding-right:40px">
+            <span class="logo_name"><img src="~/img/azin khodro.png" /> </span>
+        </div>
+
+        <ul class="nav-links">
+            <li>
+                <a href="/ControlPlan">
+                    <span class="icon"><i class="fas fa-gear"></i></span>
+                    <span class="link_name"> تعریف طرح کنترل  </span>
+                </a>
+                <ul class="sub-menu blank">
+                    <li><a class="link_name" href="/ControlPlan"> تعریف طرح کنترل  </a></li>
+                </ul>
+            </li>
+
+            <li>
+                <a href="/TestRequest">
+                    <span class="icon"><i class="fas fa-gear"></i></span>
+                    <span class="link_name"> درخواست آزمایشگاه  </span>
+                </a>
+                <ul class="sub-menu blank">
+                    <li><a class="link_name" href="/TestRequest"> درخواست آزمایش </a></li>
+                </ul>
+            </li>
+
+            <li>
+                <a href="/TestAccept">
+                    <span class="icon"><i class="fas fa-gear"></i></span>
+                    <span class="link_name"> پذیرش آزمایشگاه  </span>
+                </a>
+                <ul class="sub-menu blank">
+                    <li><a class="link_name" href="/TestAccept"> پذیرش آزمایش </a></li>
+                </ul>
+            </li>
+            <li>
+                <div class="icon-link">
+                    <a href="#">
+                        <span class="icon"><i class="fa fa-info-circle"></i></span>
+                        <span class="link_name">تایید نتایج آزمایشگاه</span>
+                    </a>
+                    <i class='fas fa-angle-down arrow'></i>
+                </div>
+                <ul class="sub-menu">
+                    <li><a class="link_name" href="#">کارتابل</a></li>
+
+                    <li><a class="link_name" href="#">کارتابل</a></li>
+                    <li><a href="/TestAccept_Kartabl">تایید نتایج آزمایشگاه</a></li>
+                </ul>
+            </li>
+
+            <li>
+                <div class="icon-link">
+                    <a href="#">
+                        <span class="icon"><i class="fa fa-info-circle"></i></span>
+                        <span class="link_name">اطلاعات پایه آزمایش</span>
+                    </a>
+                    <i class='fas fa-angle-down arrow'></i>
+                </div>
+                <ul class="sub-menu">
+                    <li><a class="link_name" href="#">اطلاعات پایه آزمایش</a></li>
+                    <li><a href="/piece">تعریف قطعه</a></li>
+                    <li><a href="/pieceUsage">تعریف نوع استفاده قطعه</a></li>
+                    <li><a href="/process"> تعریف فرآیند </a></li>
+                    <li><a href="/LabratoaryTool"> تعریف ابزار  آزمایش </a></li>
+                    <li><a href="/test">  تعریف آزمایش </a> </li>
+                    <li><a href="/TestLabratoaryTool"> تخصیص ابزار به آزمایش </a></li>
+                </ul>
+            </li>
+
+            <li>
+                <div class="icon-link">
+                    <a href="#">
+                        <span class="icon"><i class="fa fa-info-circle"></i></span>
+                        <span class="link_name">اطلاعات پایه</span>
+                    </a>
+                    <i class='fas fa-angle-down arrow'></i>
+                </div>
+                <ul class="sub-menu">
+                    <li><a class="link_name" href="#">اطلاعات پایه</a></li>
+                    <li><a href="/Measure">تعریف واحد</a></li>
+                    <li><a href="/Standard">تعریف استاندارد</a></li>
+                    <li><a href="/ProcessType">تعریف نوع قطعه</a></li>
+                    <li><a href="/TestImportance">تعریف اهمیت تست</a></li>
+                    <li><a href="/TestCondition">تعریف شرایط تست </a></li>
+                    <li><a href="/TestDescription">تعریف شرح تست </a></li>
+                    <li><a href="/RequestUnit">تعریف واحد درخواست دهنده </a></li>
+                    <li><a href="/RequestUser">تعریف کاربر درخواست دهنده </a></li>
+                </ul>
+            </li>
+
+             <li>
+                <div class="icon-link">
+                    <a href="#">
+                        <span class="icon"><i class="fa fa-info-circle"></i></span>
+                        <span class="link_name">  گزارشات</span>
+                    </a>
+                    <i class='fas fa-angle-down arrow'></i>
+                </div>
+                <ul class="sub-menu">
+                    <li><a class="link_name" href="#">گزارشات</a></li>
+                    <li><a href="/Report/TestResultReport">  نتایج آزمایشگاه</a></li>
+                </ul>
+            </li> 
+
+            <li>
+                <a href="/User">
+                    <span class="icon"><i class="fas fa-user-friends"></i></span>
+                    <span class="link_name"> تعریف کاربران  </span>
+                </a>
+                <ul class="sub-menu blank">
+                    <li><a class="link_name" href="/User"> تعریف کاربران </a></li>
+                </ul>
+            </li>
+            <li>
+                <a href="/SystemUser">
+                    <span class="icon"><i class="fas fa-user-friends"></i></span>
+                    <span class="link_name"> تعریف دسترسی کاربران  </span>
+                </a>
+                <ul class="sub-menu blank">
+                    <li><a class="link_name" href="/SystemUser"> تعریف دسترسی کاربران </a></li>
+                </ul>
+            </li>
+
+            <li>
+                <div class="profile-details">
+                    <div class="profile-content">
+                        <img src="~/img/img_avatar.png">
+                    </div>
+                    <div class="name-job">
+                        <div class="profile_name">@await Component.InvokeAsync("Layout")</div>
+                    </div>
+                    <a href="/Home/Logout">
+                        <span class="icon"><i class="fas fa-sign-out"></i></span>
+                    </a>
+                </div>
+            </li>
+        </ul>
+    </div>
+    <section class="home-section">
+        <div class="home-content">
+            <i class='bx bx-menu fa fa-bars'></i>
+
+            <div class="top_navbar" style="margin-right:90%">
+                <a href="/Home/Index">
+                    <span title="صفحه اصلی" class="icon"><i class="fas fa-home" style='color: white;padding:10px;font-size:24px'></i></span>
+                </a>
+                <a href="/Home/Logout">
+                    <span title="خروج" class="icon"><i class="fas fa-sign-out" style='color: white ;padding:10px;font-size:24px'></i></span>
+                </a>
+            </div>
+        </div>
+        <div style="padding-right:20px; padding-left:20px">
+            @RenderBody()
+            @RenderSection("Script", false)
+        </div>
+    </section>
+
+    <script>
+        let arrow = document.querySelectorAll(".arrow");
+        for (var i = 0; i < arrow.length; i++) {
+            arrow[i].addEventListener("click", (e) => {
+                let arrowParent = e.target.parentElement.parentElement;
+                arrowParent.classList.toggle("showMenu");
+            });
+        }
+        let sidebar = document.querySelector(".sidebar");
+        let sidebarBtn = document.querySelector(".bx-menu");
+        console.log(sidebarBtn);
+        sidebarBtn.addEventListener("click", () => {
+            sidebar.classList.toggle("close");
+        });
+    </script> 
+
+</body>
+</html>

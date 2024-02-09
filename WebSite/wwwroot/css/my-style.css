@@ -1,6 +1,94 @@
 
+body {
+    font-size: 12px;
+}
+
+@font-face {
+    font-family: 'iranian sans';
+    src: url('../font/iranian sans.ttf') format('truetype');
+}
+
+.rowSelected {
+    background-color: #30576a66 !important;
+    color: maroon !important;
+}
+
 
 .div_Main {
     border-color: lightgray !important;
     border: solid
+}
+
+.pagerHeader {
+    margin: 0;
+    background: #d9d9d9;
+    height: 45px;
+    border-radius: 8px 8px 0px 0px
+}
+
+.modalStyle {
+    border-radius: 1.3rem !important;
+}
+
+.modal-header {
+    background-color: #3f76a5;
+    height: 55px;
+    color: white;
+    font-weight: bold;
+    border-radius: 1.1rem 1.1rem 0rem 0rem !important;
+}
+
+.select2 {
+    width: 100% !important;
+}
+
+.select2-container--default
+.select2-selection--single {
+    padding: 0.12rem 0rem 2.12rem 0rem !important;
+}
+
+.select2-container--default
+.select2-container--open {
+    position: fixed !important;
+}
+
+.thead-color {
+    background-color: #3b7297;
+    color: white;
+}
+
+.th-color {
+    color: white;
+}
+
+table .dataTable thead th.ui-state-default:first-child, table.dataTable tfoot th.ui-state-default:first-child {
+    text-align: right !important
+}
+
+.dataTables_wrapper {
+    width: fit-content;
+}
+
+
+.container-xxl, .container-xl, .container-lg, .container-md, .container-sm, .container {
+    max-width: none;
+    align-items: center !important;
+    display: grid;
+/*    align-items: center;*/
+    justify-content: center;
+}
+
+
+.e-waitpopup-pane e-widget e-designer-loader e-reportviewer-waitingpopup {
+    height: 900px !important; 
+}
+
+.e-reportviewer-pageviewcontainer {
+    height: 900px !important; 
+}
+.element.style {
+    height: 900px !important;
+}
+.e-reportviewer-pageviewcontainer.element.style {
+    height: 900px !important;
 }

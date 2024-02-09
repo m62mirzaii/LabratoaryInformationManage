@@ -1,0 +1,80 @@
+﻿@addTagHelper*, Microsoft.AspNetCore.Mvc.TagHelpers
+@model Models.ViewModel.ControlPlanPieceViewModel
+<script>
+
+    const myArray = [];
+    $('.select-checkbox').change(function () {
+        alert(11);
+        if ($(this).is(':checked')) {
+            myArray.push($(this).val()); //put that value
+        } else {
+            const index = myArray.indexOf($(this).val());
+            if (index > -1) {
+                myArray.splice(index, 1);
+            }
+        }
+
+
+        $("#Pieceids").val(myArray);
+    });
+
+
+
+
+        $("#tblPiece").DataTable({
+            'sDom': 't',
+            "ajax": {
+                "url": "Piece/GetPieces",
+                "type": "POST",
+                "datatype": "json"
+            },
+            "columns": [
+                {
+                    "render": function (data, type, row) { return '<input type="checkbox" class="select-checkbox" name="check" value="' + row.id + '">'; }
+                },
+                { "data": "code" },
+                { "data": "pieceName" },
+                { "data": "pieceUsageName" },
+            ]
+        });
+
+
+       
+         
+</script>
+<div class="row alertBox hidden" id="alertBox">
+    <span role="alert" class="alert"></span>
+</div>
+
+<div class="container"> 
+        <form asp-action="AddControlPlanPiece" asp-controller="ControlPlan">  
+        <div class="form-group">
+            <input id="ControlPlanId" name="ControlPlanId" type="hidden" value="@ViewData["ControlPlanId"]" />
+            <input id="Pieceids" name="Pieceids"  value="" />
+        </div>
+        <div class="row" style="padding-bottom:20px">
+            <div class="col-12">
+                <table id="tblPiece" style="width:100%">
+                    <thead style=" background-color: #4c607b;">
+                        <tr>
+                            <th>نام قطعه</th>
+                            <th>شماره قطعه</th>
+                            <th>کاربرد</th>
+                            <td></td>
+                        </tr>
+                    </thead>
+                </table>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-8"></div>
+            <div class="col-4">
+                <input type="submit" value="ذخیره" id="btnAddPiece" class="btn btn-success" />
+                <input type="submit" value="انصراف" asp-action="Close" class="btn btn-danger" />
+            </div>
+        </div>
+   </form>
+</div>
+
+
+@*Html.CheckBox("SelectedStudents", false, new { @class = "check-item", id = x.Id, value = x.Id })*@

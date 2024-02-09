@@ -1,114 +1,36 @@
 ﻿
 <!DOCTYPE html>
 <html>
-<head>
-    <meta charset="utf-8" />
-    <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport' />
-    <meta name="viewport" content="width=device-width" />
-
-    @*=========== CSS  ==============*@
-    <link href="~/css/menu_style.css" rel="stylesheet" />
-    <link href="~/lib/bootstrap/dist/css/bootstrap.css" rel="stylesheet" />
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" rel="stylesheet" />
-
-    @*=========== JS ==============*@
-    <script src="~/js/jquery.js"></script>
-    <script src="~/js/bootstrap.js"></script>
-    <script src="~/js/sweet.js"></script> 
-
-
-
-    @*======================== Test =============================*@
-    <link href="~/datatable/jquery-ui.css" rel="stylesheet" type="text/css">
-    <link href="~/datatable/dataTables.jqueryui.min.css" rel="stylesheet" type="text/css">
-
-    <script type="text/javascript" src="https://code.jquery.com/jquery-3.5.1.js"></script>
-    <script type="text/javascript" src="https://cdn.datatables.net/1.13.1/js/jquery.dataTables.js"></script>
-    <script type="text/javascript" src="https://cdn.datatables.net/1.13.1/js/dataTables.jqueryui.js"></script>
-    
-
-
-    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
-    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
-   @* <script type="text/javascript" src="~/datatable/dataTables.jqueryui.min.js" type="text/javascript"></script>
-    <script type="text/javascript" src="~/datatable/jquery-3.5.1.js" type="text/javascript"></script>
-    <script type="text/javascript" src="~/datatable/jquery.dataTables.min.js" type="text/javascript"></script>*@ 
- 
+<head> 
 </head>
 <body>
-    <div class="wrapper">
-        <div class="section">
-            <div class="top_navbar" style="direction:ltr">
-                <a href="/Home/Logout">
-                    <span title="خروج" class="icon"><i class="fas fa-sign-out" style='color: white ;padding:10px;font-size:24px'></i></span>
-                </a>
+
+    @await Component.InvokeAsync("Menu")
+
+    <section class="home-section">
+        <div class="home-content">
+            @* <i class='bx bx-menu fa fa-bars'></i>*@
+
+            <div class="top_navbar" style="margin-right:90%">
                 <a href="/Home/Index">
                     <span title="صفحه اصلی" class="icon"><i class="fas fa-home" style='color: white;padding:10px;font-size:24px'></i></span>
                 </a>
+                <a href="/Home/Logout">
+                    <span title="خروج" class="icon"><i class="fas fa-sign-out" style='color: white ;padding:10px;font-size:24px'></i></span>
+                </a>
             </div>
         </div>
-        <div class="sidebar">
-            <div class="profile">
-                <img src="~/img/img_avatar.png">
-                <h3> @await Component.InvokeAsync("Layout")</h3>
-            </div>
-            <ul>
-                <li>
-                    <a href="/pieceusage">
-                        <span class="icon"><i class="fas fa-desktop"></i></span>
-                        <span class="item">تعریف کاربردها</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="/piece">
-                        <span class="icon"><i class="fas fa-tools"></i></span>
-                        <span class="item">تعریف قطعه</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="/process">
-                        <span class="icon"><i class="fas fa-tachometer-alt"></i></span>
-                        <span class="item">تعریف فرآیندها</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="/test">
-                        <span class="icon"><i class="fas fa-database"></i></span>
+        <div style="padding-right:20px; padding-left:20px">
+            @RenderBody()
+            @RenderSection("Script", false) 
 
-                        <span class="item"> تعریف آزمایش ها </span>
-                    </a>
-                </li>
-                <li>
-                    <a href="/LabratoaryTool">
-                        <span class="icon"><i class="fas fa-tools"></i></span>
-                        <span class="item">تعریف ابزارهای آزمایشگاه</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="/User">
-                        <span class="icon"><i class="fas fa-user-friends"></i></span>
-                        <span class="item">تعریف کاربران</span>
-                    </a>
-                </li>
-                 <li>
-                   <a href="/Home/Logout">
-                        <span class="icon"><i class="fas fa-sign-out"></i></span>
-                        <span class="item">خروج</span>
-                    </a>
-                </li>
-            </ul>
+            <bold-script-manager></bold-script-manager>
         </div>
+    </section>
 
-    </div>
-    <script>
-        var hamburger = document.querySelector(".hamburger");
-        hamburger.addEventListener("click", function () {
-            document.querySelector("body").classList.toggle("active");
-        })
-    </script>
-    <div style="width: calc(100% - 300px); margin-right: 290px; margin-top:20px">
-        @RenderBody()
-        @RenderSection("Script", false)
-    </div>
+
 </body>
+
 </html>
+
+

@@ -5,76 +5,229 @@
     Layout = "~/Views/Shared/_masterLayout.cshtml";
 }
 
-@section Script
-    {
-    <script src='~/website/User.js'></script>
+@section Script{
+    <script src='~/website/User.js' asp-append-version="true"></script>
+    <link href="~/css/my-style.css" rel="stylesheet" />
 }
-<div class="card m-0">
-    <div class="card bg-gradient" style="margin: 0;background: #d9d9d9">
-        <div class="content table-responsive table-full-width">
-            <label style="padding-right : 10px  ; font-size:20px;"> کاربران </label>
-        </div>
-    </div>
-    <div class="card">
-        <div class="content table-responsive table-full-width m-1">
-            <div style="width:80%">
-                <div class="row" style="direction: ltr;padding:12px"> 
-                    <a id="btnAdd" class="btn btn-success" style="width:120px">جدید</a> 
-                </div>
-                <table id="tblUser" class="table table-striped table-bordered table-responsive">
-                    <thead class="text-center">
-                        <tr>
-                            <th>نام </th>
-                            <th>Admin</th>
-                            <th>تلفن </th>
-                            <th>آدرس</th>
-                            <th>نام کاربری</th>
-                            <th>رمز عبور</th>
-                            <th>وضعیت</th>
-                            <th></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @if (Model != null)
-                        {
-                            foreach (var item in Model)
-                            {
-                                <tr>
-                                    <td>@Html.DisplayFor(model => item.FullName)</td>
-                                    <td>@Html.DisplayFor(model => item.IsAdmin)</td>
-                                    <td>@Html.DisplayFor(model => item.Phone)</td>
-                                    <td>@Html.DisplayFor(model => item.Address)</td>
-                                    <td>@Html.DisplayFor(model => item.UserName)</td>
-                                    <td>@Html.DisplayFor(model => item.Password)</td> 
-                                    <td>@Html.DisplayFor(model => item.IsActive)</td>
-                                    <td width="150px">
-                                        <a id="btnEdit" class="btn btn-sm btn-primary" data-id="@item.Id"> <i class="fa fa-edit"></i>  ویرایش</a>
-                                        <a href="#" class="btn btn-sm btn-danger" onclick="myDelete('@item.Id')"><i class="fa fa-trash"></i></a>
-                                    </td>
-                                </tr>
-                            }
-                        }
-                    </tbody>
-                </table>
-            </div>
-        </div>
 
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+
+<div class="card bg-gradient pagerHeader">
+    <div class="content table-responsive table-full-width">
+        <label style="padding-right : 10px  ; font-size:20px;"> کاربران </label>
+    </div>
+</div>
+<div class="card m-0" style="align-items: center; height:950px">
+    <div class="container" style="margin-top:15px">
+        <table id="tblUser" class="table table-striped table-bordered table-responsive">
+            <thead class="thead-color">
+                <tr>
+                    <th class="th-color" style="width:200px">نام </th>
+                    <th class="th-color" style="width:200px">شماره حساب </th>
+                    <th class="th-color" style="width:150px">تلفن </th>
+                    <th class="th-color" style="width:400px">آدرس</th>
+                    <th class="th-color" style="width:150px">نام کاربری</th>
+                    <th class="th-color">Admin</th>
+                    <th class="th-color">وضعیت</th>
+                    <th class="th-color"></th>
+                    <th class="th-color">
+                        <a style="font-size:20px;cursor: pointer;" onclick="ShowPopUp_Insert()"> <i class="fa fa-plus-circle" style="color:white"></i> </a>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
     </div>
 </div>
 
+
+<input id="userId_Selected" class="form-control" type="hidden" />
+<!-- Modal Popup -->
+<div id="insertUserModal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog" role="document" style="max-width: 40%">
+        <div class="modal-content modalStyle">
+            <div class="modal-header">
+                <label>ثبت / ویرایش اطلاعات</label>
+                <img src="~/img/modal-header.png" />
+            </div>
+            <div id="insertUserModal_body" class="modal-body">
+                <div class="row alertBox hidden" id="alertBox">
+                    <span role="alert" class="alert"></span>
+                </div> 
+                <div class="row" style="padding-bottom:20px">
+                    <div class="col-5">
+                        <div class="form-group">
+                            <label class="control-label">نام</label>
+                            <span style="color:red">*</span>
+                            <input id="txt_FirstName" class="form-control" />
+                        </div>
+                    </div>
+
+                    <div class="col-5">
+                        <div class="form-group">
+                            <label class="control-label">نام خانوادگی</label>
+                            <span style="color:red">*</span>
+                            <input id="txt_LastName" class="form-control" />
+                        </div>
+                    </div>
+                </div>
+                <div class="row" style="padding-bottom:20px">
+                    <div class="col-5">
+                        <div class="form-group">
+                            <label class="control-label">شماره حساب</label>
+                            <input id="txt_BankAccountNo" class="form-control" maxlength="25" />
+                        </div>
+                    </div>
+
+                    <div class="col-5">
+                        <div class="form-group">
+                            <label class="control-label">تلفن</label>
+                            <input id="txt_Phone" class="form-control" />
+                        </div>
+                    </div>
+                </div>
+                <div class="row" style="padding-bottom:20px">
+                    <div class="col-10">
+                        <div class="form-group">
+                            <label class="control-label">آدرس</label>
+                            <input id="txt_Address" class="form-control" />
+                        </div>
+                    </div>
+                </div>
+                <div class="row" style="padding-bottom:20px">
+                    <div class="col-5">
+                        <div class="form-group">
+                            <label class="control-label">نام کاربری</label>
+                            <span style="color:red">*</span>
+                            <input id="txt_UserName" class="form-control" />
+                        </div>
+                    </div> 
+                    <div class="col-5">
+                        <div class="form-group">
+                            <label class="control-label">رمز عبور</label>
+                            <span style="color:red">*</span>
+                            <input type="password" id="txt_Password" class="form-control" />
+                        </div>
+                    </div>
+                </div>
+                <div class="row" style="padding-bottom:20px">
+                    <div class="col-5">
+                        <div class="form-switch">
+                            <label class="control-label">Admin</label>
+                            <input type="checkbox" id="chk_IsAdmin " class="form-check-input" style="font-size:18px;width:80px" checked="checked">
+                        </div>
+                    </div> 
+                    <div class="col-5">
+                        <div class="form-switch">
+                            <label class="control-label">وضعیت</label>
+                            <input type="checkbox" id="chk_IsActive " class="form-check-input" style="font-size:18px;width:80px" checked="checked">
+
+                        </div>
+                    </div>
+                </div>
+                <div class="row"  style=" margin-top:15px" >
+                    <div class="col-7"></div>
+                    <div class="col-5">
+                        <input type="submit" value="ذخیره" onclick="InsertUser()" style="width:110px " class="btn btn-sm btn-success" />
+                        <input type="button" value="انصراف" onclick="ClosePopUp_Insert()" class="btn btn-sm btn-danger" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
 <!-- Modal Popup -->
-<div id="MyPopup" class="modal fade" role="dialog">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div style="background-color:#3a768f">                
-                <img src="~/img/plus_21081.png" style="padding : 8px">
+<div id="updateUserModal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog" role="document" style="max-width: 40%">
+        <div class="modal-content modalStyle">
+            <div class="modal-header">
+                <label>   ویرایش اطلاعات</label>
+                <img src="~/img/modal-header.png" />
             </div>
-            <div class="modal-body">
-                <div id="dvPartial"></div>
+            <div id="updateTestRequestModal_body" class="modal-body">
+                <div class="row alertBox hidden" id="alertBox">
+                    <span role="alert" class="alert"></span>
+                </div>
+                <div class="row" style="padding-bottom:20px">
+                    <div class="col-5">
+                        <div class="form-group">
+                            <label class="control-label">نام</label>
+                            <span style="color:red">*</span>
+                            <input id="txt_FirstName_update" class="form-control" />
+                        </div>
+                    </div> 
+                    <div class="col-5">
+                        <div class="form-group">
+                            <label class="control-label">نام خانوادگی</label>
+                            <span style="color:red">*</span>
+                            <input id="txt_LastName_update" class="form-control" />
+                        </div>
+                    </div>
+                </div>
+                <div class="row" style="padding-bottom:20px">
+                    <div class="col-5">
+                        <div class="form-group">
+                            <label class="control-label">شماره حساب</label>
+                            <input id="txt_BankAccountNo_update" class="form-control" maxlength="25" />
+                        </div>
+                    </div> 
+                    <div class="col-5">
+                        <div class="form-group">
+                            <label class="control-label">تلفن</label>
+                            <input id="txt_Phone_update" class="form-control" />
+                        </div>
+                    </div>
+                </div>
+                <div class="row" style="padding-bottom:20px">
+                    <div class="col-10">
+                        <div class="form-group">
+                            <label class="control-label">آدرس</label>
+                            <input id="txt_Address_update" class="form-control" />
+                        </div>
+                    </div>
+                </div>
+                <div class="row" style="padding-bottom:20px">
+                    <div class="col-5">
+                        <div class="form-group">
+                            <label class="control-label">نام کاربری</label>
+                            <span style="color:red">*</span>
+                            <input id="txt_UserName_update" class="form-control" />
+                        </div>
+                    </div> 
+                    <div class="col-5">
+                        <div class="form-group">
+                            <label class="control-label">رمز عبور</label>
+                            <span style="color:red">*</span>
+                            <input type="password" id="txt_Password_update" class="form-control" />
+                        </div>
+                    </div>
+                </div>
+                <div class="row" style="padding-bottom:20px">
+                    <div class="col-5">
+                        <div class="form-switch">
+                            <label class="control-label">Admin</label>
+                            <input type="checkbox" id="chk_IsAdmin_update" class="form-check-input" style="font-size:18px;width:80px" checked="checked">
+                        </div>
+                    </div>
+               
+                    <div class="col-5">
+                        <div class="form-switch">
+                            <label class="control-label">وضعیت</label>
+                            <input type="checkbox" id="chk_IsActive_update" class="form-check-input" style="font-size:18px;width:80px" checked="checked">
+
+                        </div>
+                    </div>
+                </div>
+                <div class="row" style="padding-bottom:20px">
+                    <div class="col-8"></div>
+                    <div class="col-4" style="margin-top:19px">
+                        <input type="submit" value="ویرایش" onclick="UpdateUser()" style="width:90px" class="btn btn-sm btn-primary" />
+                        <input type="submit" value="انصراف" onclick="ClosePopUp_Update()" class="btn btn-sm btn-danger" />
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 </div>
-
-

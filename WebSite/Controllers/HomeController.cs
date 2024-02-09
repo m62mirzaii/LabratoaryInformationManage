@@ -1,36 +1,39 @@
-﻿using Core.Repository;
+﻿using Core.CacheMemory;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
-using Models.ViewModel; 
+using Models.ViewModel;
+using Service.User;
 
 namespace WebSite.Controllers
-{ 
+{
     public class HomeController : Controller
     {
-        IUserRepository _userRepository;
-        public HomeController(IUserRepository userRepository)
+        IUserRepository _userRepository; 
+
+        public HomeController(IUserRepository userRepository )
         {
-            _userRepository = userRepository;
+            _userRepository = userRepository; 
         }
-        public IActionResult Index()
+        public ActionResult Index()
         { 
-            return RedirectToAction("Login", "Home");
+            //  return View();
+             return RedirectToAction("Login", "Home");
         }
 
-        public IActionResult Main()
-        {
+        public ActionResult Main()
+        { 
             return View();
         }
 
-        public IActionResult Login()
+        public ActionResult Login()
         { 
             return View();
         }
 
         [HttpPost]
-        public IActionResult LoginValidation(UserViewModel userViewModel)
+        public ActionResult LoginValidation(UserViewModel userViewModel)
         {
             var userName = userViewModel.UserName;
             var password = userViewModel.Password;
@@ -57,19 +60,18 @@ namespace WebSite.Controllers
                         IsPersistent = true
                     };
 
-                    HttpContext.SignInAsync(principal, properties);  
+                    HttpContext.SignInAsync(principal, properties); 
+
                     return RedirectToAction("Main", "Home");
                 }
-            }
- 
+            } 
          
             return View("Login", userViewModel);
         }
 
-        public IActionResult Logout()
+        public ActionResult Logout()
         {            
             return RedirectToAction("Login", "Home");
-        }
-
+        } 
     }
 }

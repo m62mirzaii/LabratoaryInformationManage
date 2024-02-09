@@ -1,10 +1,11 @@
-﻿using Core.Repository;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Models.Model;
 using Models.ViewModel;
+using Service.User;
 
 namespace WebSite.Controllers
 {
+    //[Authorize(systemName = "User")]
     public class UserController : Controller
     {
         public IUserRepository _userService;
@@ -13,51 +14,90 @@ namespace WebSite.Controllers
         {
             _userService = userService;
         }
-
-        public async Task<IActionResult> Index()
-        {
-            var result =  await _userService.GetUsers();
-            return View(result);
+          
+        public  IActionResult Index()
+        { 
+            return View();
         }
 
         [HttpPost]
-        public IActionResult Show_InsertPartial()
+        public IActionResult GetUsers()
         {
-            Users users = new Users();
-            return PartialView("_InsertPartial", users);
-        }
+            var result = _userService.GetUsers(); 
+            var jsonData = new { data = result };
 
-        public IActionResult AddUser(Users users)
-        {
-            _userService.AddUser(users);
-            return RedirectToAction(nameof(Index));
-        }
+            return Ok(jsonData);
+        }  
 
         [HttpPost]
-        public IActionResult  Show_UpdatePartial([FromBody] UserViewModel lab)
+        public JsonResult GetUserForSelect2(string searchTerm)
         {
-            int id = lab.Id;
-            UserViewModel users =   _userService.GetUserById(id);
-            return PartialView("_UpdatePartial", users);
+            var result = _userService.GetUserForSelect2(searchTerm);
+            return Json(result);
         }
 
-        public IActionResult UpdateUser(UserViewModel users)
+        [HttpPost]  
+        public void AddUser()
         {
-            int id = users.Id;
-            bool result = _userService.UpdateUser(id, users);
+            var firstName = Request.Form["FirstName"].ToString();
+            var lastName = Request.Form["LastName"].ToString();
+            var address = Request.Form["Address"].ToString();
+            var phone = Request.Form["Phone"].ToString();
+            var userName = Request.Form["UserName"].ToString();
+            var password = Request.Form["Password"].ToString();
+            var bankAccountNo = Request.Form["BankAccountNo"].ToString();
+            var IsActive = Convert.ToBoolean(Request.Form["IsActive"].ToString());
+            var isAdmin = Convert.ToBoolean(Request.Form["IsAdmin"].ToString());
 
-            return RedirectToAction(nameof(Index));
+            var user = new Users 
+            {
+                FirstName = firstName,
+                LastName = lastName,
+                Address = address,
+                Phone = phone,
+                UserName = userName,
+                Password = password,
+                BankAccountNo = bankAccountNo,
+                IsAdmin = isAdmin,
+                IsActive = IsActive,
+            };
+            _userService.AddUser(user); 
+        }
+
+        [HttpPost] 
+        public void UpdateUser( )
+        {
+            var id = Convert.ToInt32(Request.Form["Id"].ToString());
+            var firstName = Request.Form["FirstName"].ToString();
+            var lastName = Request.Form["LastName"].ToString();
+            var address = Request.Form["Address"].ToString();
+            var phone = Request.Form["Phone"].ToString();
+            var userName = Request.Form["UserName"].ToString();
+            var password = Request.Form["Password"].ToString();
+            var bankAccountNo = Request.Form["BankAccountNo"].ToString(); 
+            var IsActive = Convert.ToBoolean(Request.Form["IsActive"].ToString());
+            var isAdmin = Convert.ToBoolean(Request.Form["IsAdmin"].ToString());
+
+            var user = new UserViewModel
+            {
+                Id= id,
+                FirstName = firstName,
+                LastName = lastName,
+                Address = address,
+                Phone = phone,
+                UserName = userName,
+                Password = password,
+                BankAccountNo = bankAccountNo,
+                IsAdmin = isAdmin,
+                IsActive = IsActive,
+            };
+            _userService.UpdateUser(  user); 
         }
 
         public IActionResult Delete(int id)
         {
             _userService.DeleteUser(id);
             return RedirectToAction(nameof(Index));
-        }
-
-        public IActionResult Close()
-        {
-            return RedirectToAction(nameof(Index));
-        }
+        } 
     }
 }

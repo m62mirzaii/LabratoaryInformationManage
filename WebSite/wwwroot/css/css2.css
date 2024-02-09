@@ -1,0 +1,14 @@
+@font-face {
+  font-family: 'Chakra Petch';
+  font-style: normal;
+  font-weight: 300;
+  font-display: swap;
+  src: url(https://fonts.gstatic.com/s/chakrapetch/v9/cIflMapbsEk7TDLdtEz1BwkeNIhFQw.woff) format('woff');
+}
+@font-face {
+  font-family: 'Tinos';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url(https://fonts.gstatic.com/s/tinos/v24/buE4poGnedXvwgX_.woff) format('woff');
+}

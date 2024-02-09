@@ -1,9 +1,14 @@
-﻿using Core.Repository;
+﻿using Core.Services.LabratoryTools;
+using Core.Services.Tests;
 using Microsoft.AspNetCore.Mvc;
 using Models.Model;
+using WebSite.Filters;
 
 namespace WebSite.Controllers
 {
+
+    //[Authorize(systemName = "LabratoaryTool")]
+
     public class LabratoaryToolController : Controller
     {
         public ILabratoaryToolRepository _labratoaryToolService;
@@ -13,50 +18,63 @@ namespace WebSite.Controllers
             _labratoaryToolService = toolRepository;
         }
 
-        public async Task<IActionResult> Index()
-        {
-            var result = await _labratoaryToolService.GetLabratoaryTools();
-            return View(result);
+        public IActionResult Index()
+        {            
+            return View();
         }
 
         [HttpPost]
-        public IActionResult Show_InsertPartial()
-        {
-            LabratoaryTool labratoaryTool = new LabratoaryTool();
-            return PartialView("_InsertPartial", labratoaryTool);
+        public IActionResult GetActiveTools()
+        {  
+            var result = _labratoaryToolService.GetLabratoaryTools();
+            var recordsTotal = result.Count();
+            var jsonData = new { recordsTotal = recordsTotal, data = result };
+
+            return Ok(jsonData);
         }
 
-        public IActionResult AddLabratoaryTool(LabratoaryTool labratoaryTool)
-        {
-            _labratoaryToolService.AddLabratoaryTool(labratoaryTool);
-            return RedirectToAction(nameof(Index));
-        }
 
         [HttpPost]
-        public async Task<IActionResult> Show_UpdatePartial([FromBody] LabratoaryTool lab)
+        public JsonResult GetLabratoaryToolForSelect2(string searchTerm)
         {
-            int id = lab.Id;
-            LabratoaryTool labratoaryTool = await _labratoaryToolService.GetLabratoaryToolById(id);
-            return PartialView("_UpdatePartial", labratoaryTool);
+            var result = _labratoaryToolService.GetLabratoaryToolForSelect2(searchTerm);
+            return Json(result);
         }
 
-        public IActionResult UpdateLabratoaryTool(LabratoaryTool labratoaryTool)
+        [HttpPost] 
+        public void AddLabratoaryTool()
         {
-            int id = labratoaryTool.Id;
-            bool result = _labratoaryToolService.UpdateLabratoaryTool(id, labratoaryTool);
+            var toolName = Request.Form["ToolName"].ToString();
+            var IsActive = Convert.ToBoolean(Request.Form["IsActive"].ToString());
 
-            return RedirectToAction(nameof(Index));
+            var labratoaryTool = new LabratoaryTool
+            {
+                ToolName = toolName,
+                IsActive = IsActive,
+            };
+            _labratoaryToolService.AddLabratoaryTool(labratoaryTool); 
+        }
+
+        [HttpPost] 
+        public void UpdateLabratoaryTool( )
+        {
+            var id = Convert.ToInt32(Request.Form["Id"].ToString()); 
+            var toolName = Request.Form["ToolName"].ToString();
+            var IsActive = Convert.ToBoolean(Request.Form["IsActive"].ToString());
+
+            var labratoaryTool = new LabratoaryTool
+            {
+                Id = id,
+                ToolName = toolName,
+                IsActive = IsActive,
+            };
+            _labratoaryToolService.UpdateLabratoaryTool(  labratoaryTool); 
         }
 
         public IActionResult Delete(int id)
         {
             _labratoaryToolService.DeleteLabratoaryTool(id);
             return RedirectToAction(nameof(Index));
-        }
-
-        public IActionResult Close()
-        {
-            return RedirectToAction(nameof(Index));
-        }
+        } 
     }
 }
